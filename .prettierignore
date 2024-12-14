@@ -1,0 +1,18 @@
+# Build outputs
+build
+dist
+.docusaurus
+
+# Dependencies directory
+node_modules
+
+# Helm files
+helm
+
+# Docker volumes
+docker
+
+# Jest output
+coverage
+reports
+__snapshots__

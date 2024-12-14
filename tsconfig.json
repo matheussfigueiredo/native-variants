@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "outDir": "dist",
+    "declaration": true,
+    "sourceMap": true,
+    "lib": ["ES2020", "dom"],
+    "declarationMap": true
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true
+  },
+  "include": ["packages/**/*.ts"],
+  "exclude": ["node_modules", "docs", "run"]
+}
