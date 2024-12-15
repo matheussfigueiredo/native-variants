@@ -14,6 +14,7 @@
       "@/*": ["packages/*"]
     },
     "outDir": "dist",
+    "rootDir": "./packages",
     "declaration": true,
     "sourceMap": true,
     "lib": ["ES2020", "dom"]
@@ -22,5 +23,5 @@
     "resolveFullPaths": true
   },
   "include": ["packages/**/*.ts"],
-  "exclude": ["node_modules", "dist", "docs", ".husky"]
+  "exclude": ["node_modules", "dist", "docs", ".husky", "run"]
 }
