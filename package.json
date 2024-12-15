@@ -1,12 +1,14 @@
 {
-  "name": "recipe",
+  "name": "native-variants",
   "version": "0.1.2",
   "description": "A library for handling variants in React Native components with theme support.",
   "main": "dist/index.js",
+  "private": "false",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "packageManager": "pnpm@9.12.3",
   "scripts": {
     "build": "swc packages -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
     "lint": "eslint packages/**/*.ts",

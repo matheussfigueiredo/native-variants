@@ -55,7 +55,7 @@ importers:
         specifier: ^8.18.0
         version: 8.18.0(eslint@9.17.0)(typescript@5.7.2)
 
-  packages/recipe:
+  packages/native-variants:
     dependencies:
       react:
         specifier: 18.3.1
@@ -145,9 +145,9 @@ importers:
       react-native-webview:
         specifier: 13.12.5
         version: 13.12.5(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.16)(react@18.3.1))(react@18.3.1)
-      recipe:
+      native-variants:
         specifier: workspace:*
-        version: link:../packages/recipe
+        version: link:../packages/native-variants
     devDependencies:
       '@babel/core':
         specifier: ^7.25.2

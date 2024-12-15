@@ -1,10 +1,6 @@
-import {
-  Component,
-  NativeCSSProperties,
-  Variants,
-} from "../types/recipe-props";
+import { Component, NativeCSSProperties, Variants } from "../types/nv-props";
 
-export const recipe = <
+export const nv = <
   S extends string,
   V extends Variants<S>,
   D extends Partial<{ [K in keyof V]: keyof V[K] }> = Partial<{
