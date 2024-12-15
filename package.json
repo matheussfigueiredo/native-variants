@@ -1,21 +1,28 @@
 {
   "name": "recipe",
   "version": "0.1.0",
-  "description": "",
+  "description": "A library for handling variants in React Native components with theme support.",
   "main": "dist/index.js",
-  "scripts": {
-    "build": "swc src -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
-    "lint": "eslint packages/**/*.ts",
-    "prepare": "husky"
-  },
-  "workspaces": [
-    "run/**",
-    "packages/**"
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
   ],
+  "scripts": {
+    "build": "swc packages -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
+    "lint": "eslint packages/**/*.ts",
+    "prepare": "husky",
+    "deploy": "npm version patch && npm publish"
+  },
   "engines": {
     "node": "^20"
   },
-  "keywords": [],
+  "keywords": [
+    "slots",
+    "variants",
+    "style-sheet",
+    "react-native",
+    "coumpound-variants"
+  ],
   "author": "matheusscode <matheussdev3@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -34,9 +41,7 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-native": "^0.76.5"
-  },
-  "dependencies": {
+    "react-native": "^0.76.5",
     "husky": "^9.1.7"
   }
 }
