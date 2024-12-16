@@ -7,6 +7,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "packageManager": "pnpm@9.12.3",
   "scripts": {
     "build": "swc packages -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",

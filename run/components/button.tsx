@@ -1,8 +1,8 @@
-import { native-variants, type VariantProps } from "native-variants";
+import { nv, type VariantProps } from "native-variants";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
-const buttonnative-variants = native-variants({
+const buttonVariants = nv({
   slots: ["root", "text"],
   base: {
     root: {
@@ -52,13 +52,13 @@ const buttonnative-variants = native-variants({
 
 export interface ButtonProps
   extends React.ComponentPropsWithoutRef<typeof TouchableOpacity>,
-    VariantProps<typeof buttonnative-variants> {}
+    VariantProps<typeof buttonVariants> {}
 
 export const Button = React.forwardRef<
   React.ComponentRef<typeof TouchableOpacity>,
   ButtonProps
 >(({ children, variant, ...props }, ref) => {
-  const { root, text } = buttonnative-variants({ variant });
+  const { root, text } = buttonVariants({ variant });
 
   return (
     <TouchableOpacity {...props} ref={ref} style={root}>

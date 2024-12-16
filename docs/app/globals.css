@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0, 0%, 7%;
+    --list-item: 0, 0%, 45%;
+    --title: 210, 22%, 96%;
+    --paragraphy: 210, 26%, 91%;
+    --background: 240 10% 3.9%;
+    --radius: 0.3rem;
+    --highlight: 218, 12%, 63%;
+    --stronger: 210, 26%, 91%;
+    --blue-sky: 204, 100%, 45%;
+    --date: 107, 114%, 128%;
+    --border: 210, 4%, 15%;
+  }
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-title rounded-2xl hover:bg-highlight;
+}
+
+html {
+  @apply antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  @apply bg-background;
+  font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+}
+
+h1 {
+  @apply !font-semibold text-4xl scroll-m-20 pb-6;
+}
+
+h2 {
+  @apply font-normal text-3xl;
+}
+
+h3 {
+  @apply font-normal text-2xl;
+}
+
+h4 {
+  @apply text-xl;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-title;
+}
+
+h2,
+h3,
+h4 {
+  @apply border-b border-border text-stronger font-semibold mt-8 mb-6 pb-2.5;
+}
+
+strong {
+  @apply text-stronger;
+}
+
+p {
+  @apply text-paragraphy first:mt-6;
+}
+
+li {
+  @apply text-list-item font-extralight text-sl;
+}
+
+a {
+  @apply !text-blue-sky;
+}
+
+blockquote {
+  @apply mt-6 border-l-2 pl-6 italic text-highlight my-4;
+}
+
+table {
+  @apply w-full;
+}
+
+tr {
+  @apply m-0 border-t p-0 even:bg-border;
+}
+
+th {
+  @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+}
+
+td {
+  @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+}
+
+ul {
+  @apply my-6 ml-6 [&>li]:mt-2 list-disc;
+}
+
+ol {
+  @apply [&>li]:mt-2 list-none;
+}
+
+span {
+  @apply text-date;
+}
+
+.language-typescript > span {
+  color: #52a8ff;
+}
+
+/* 
+.code-lang {
+  color: #c84e74;
+  font-weight: bold;
+}
+
+.code-var {
+  color: #52a8ff;
+}
+
+.code-func {
+  color: #bf7af0;
+}
+
+.code-value {
+  color: #62c073;
+}
+
+.comment {
+  color: #606060 !important;
+}
+
+*/
