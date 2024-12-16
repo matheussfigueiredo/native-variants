@@ -16,8 +16,11 @@ export default function Home() {
           </h4>
         </div>
         <div className="flex items-center gap-2.5">
-          <DefLink href="/">Documentation</DefLink>
-          <DefLink href="/" variant="secondary">
+          <DefLink href="/docs/introduction">Documentation</DefLink>
+          <DefLink
+            href="https://github.com/matheussatoshi/native-variants"
+            variant="secondary"
+          >
             Github <Redirect />
           </DefLink>
         </div>
