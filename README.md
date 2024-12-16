@@ -1,207 +1,126 @@
-<p align="center">
-    <img width="20%" src=".github/assets/logo.png" alt="native-variants" />
-    <h1 align="center">native-variants</h1>
-</p>
-<p align="center">
-  Unlock <em>dynamic</em> and <em>flexible</em> styling for React Native with a powerful variant API.<br><br>
-  <a href="https://www.npmjs.com/package/native-variants">
-    <img src="https://img.shields.io/npm/dm/native-variants.svg?style=flat-round" alt="npm downloads">
-  </a>
-  <a href="https://www.npmjs.com/package/native-variants">
-    <img alt="NPM Version" src="https://badgen.net/npm/v/native-variants" />
-  </a>
-  <a href="https://github.com/matheusscode/native-variants/blob/main/LICENSE">
-    <img src="https://img.shields.io/npm/l/native-variants?style=flat" alt="License">
-  </a>
-</p>
 
-## Features
+<h1 align='center'>native-variants</h1>
 
-- Flexible variant-based API
-- Optimized for React Native using `StyleSheet`
-- Reusable styles with composition
-- Fully typed with TypeScript support
-- Intuitive default variants
+Simplify and streamline style management in React 
+Native with TypeScript support
 
-</br>
-
-## Documentation
-
-For full documentation, visit [native-variants](https://github.com/matheusscode/native-variants)
-
-</br>
+ 
+<h4>Installation</h4>
 
 
-## Quick Start
+Install `native-variants` using npm or yarn:
 
-### 1. Installation:
-
-To use **native-variants** in your project, you can install it as a dependency:
 
 ```bash
+npm install native-variants
+//or
 yarn add native-variants
-# or
-npm i native-variants
 ```
 
-</br>
+<h4>Overview</h4>
 
-### 2. Code Overview
+`native-variants` provides a powerful utility to define, organize, and apply component styling for React Native. It supports multiple slots, variants, default settings, and compound variants, enabling a clean and reusable way to manage styles.
 
-1. **DefaultTheme Interface**:
-   - Represents the default theme. Extend this interface to define theme properties.
+<h3>Getting Started</h3>
 
-   ```ts
-   export interface DefaultTheme {}
+Here’s a quick example of how to use `native-variants` to style a button component.
 
 
-</br>
+<h4>Defining Variants</h4>
 
-2. **ThemeProviderProps Type**:
-- Props for the `ThemeProvider`, including `children` and `theme`
+```tsx
+import { nv, type VariantProps } from "native-variants";
 
-```ts
-type ThemeProviderProps = {
-  children: React.ReactNode;
-  theme: DefaultTheme;
-};
+const buttonVariants = nv({
+  slots: ["root", "text"], // Define slots for styling
+  base: {
+    root: { paddingHorizontal: 16, paddingVertical: 12 }, // Base styles for root
+    text: { color: "white", textAlign: "center" }, // Base styles for text
+  },
+  variants: {
+    variant: {
+      solid: {
+        root: { backgroundColor: "#ff0006" },
+        text: { color: "white" },
+      },
+      ghost: {
+        root: { backgroundColor: "transparent" },
+        text: { color: "#ff0006" },
+      },
+    },
+  },
+  defaultVariants: {
+    variant: "solid", // Default variant configuration
+  },
+  compoundVariants: [
+    {
+      variant: "ghost",
+      css: {
+        root: { borderWidth: 1, borderColor: "#fff006" },
+      },
+    },
+  ],
+});
 ```
 
-</br>
+<h4>Using the Variants</h4>
 
-3. **ThemeContext**:
+Create a styled `Button` component:
 
-- Holds the theme value, initialized as `undefined`.
+```tsx
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
 
-</br>
+export interface ButtonProps
+  extends React.ComponentPropsWithoutRef<typeof TouchableOpacity>,
+    VariantProps<typeof buttonVariants> {}
 
-4. **ThemeProvider Component**:
+export const Button = React.forwardRef<
+  React.ComponentRef<typeof TouchableOpacity>,
+  ButtonProps
+>(({ children, variant, ...props }, ref) => {
+  const { root, text } = buttonVariants({ variant });
 
-
-```ts
-export function ThemeProvider({ children, theme }: ThemeProviderProps) {
   return (
-    <ThemeContext.Provider value={theme as DefaultTheme}>
-      {children}
-    </ThemeContext.Provider>
+    <TouchableOpacity {...props} ref={ref} style={root}>
+      <Text style={text}>{children}</Text>
+    </TouchableOpacity>
+  );
+});
+
+Button.displayName = "Button";
+```
+
+<h4>Usage Example</h4>
+
+
+```tsx
+import { Button } from "./Button";
+
+export default function App() {
+  return (
+    <>
+      <Button variant="solid">Solid Button</Button>
+      <Button variant="ghost">Ghost Button</Button>
+    </>
   );
 }
 ```
 
-</br>
+<h3>Features</h3>
 
-5. **Extending DefaultTheme**:
+1. **Multi-Slot Styling**: Define styles for multiple slots (e.g., `root`, `text`).
+2. **Variant Management**: Easily handle variations like `solid` or `ghost`.
+3. **Default Variants**: Define fallback styles for missing configurations.
+4. **Compound Variants**: Apply conditional styles based on combined properties.
 
-- Extend `DefaultTheme` with specific `theme` properties.
+<h3>Contributing</h3>
 
-```ts
-import { theme } from "@/theme/token-colors";
+Feel free to contribute by submitting issues or pull requests. For questions, reach out to the maintainer:
 
-declare module "native-variants-test" {
-  type Theme = typeof theme;
+Email: matheussdev3@gmail.com
+Maintainer: [matheussatoshi](https://github.com/matheussatoshi)
 
-  export interface DefaultTheme extends Theme {}
-}
-```
+<h3>License</h3>
 
-</br>
-
-### 3. Usage:
-
-Here's an example of how to create a styled Button component with variants using native-variants:
-
-```js
-import { av } from "native-variants";
-
-const buttonVariants = av({
-  base: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 4,
-    paddingHorizontal: 20,
-    fontSize: 16,
-  },
-  variants: {
-    variant: {
-      default: {
-        backgroundColor: "blue",
-        color: "white",
-      },
-      outline: {
-        backgroundColor: "transparent",
-        borderWidth: 1,
-        borderColor: "blue",
-        color: "blue",
-      },
-    },
-    size: {
-      default: { height: 40 },
-      small: { height: 30, fontSize: 14 },
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
-
-export const Button = ({ variant, size }) => {
-  return <View style={buttonVariants({ variant, size })}><Text>Click me</Text></View>;
-};
-```
-
-</br>
-
-### Slots
-
-Here's an example of how to create a styled component with variants and slots using native-variants:
-
-```js
-import { nv } from 'native-variants';
-
-const tabs = nv({
-  slots: {
-    tabs_list: {
-      display: "flex",
-      width: "100%",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      gap: 2,
-      marginBottom: 4,
-    },
-    tab: {
-      paddingHorizontal: 20,
-      paddingVertical: 6,
-      fontSize: 13,
-      display: "flex",
-      flexDirection: "row",
-      textAlign: "center",
-      justifyContent: "center",
-      alignItems: "center",
-      gap: 2,
-    },
-    panel: {
-      paddingVertical: 14,
-      display: "flex",
-      flexDirection: "column",
-      width: "100%",
-      height: "auto",
-    },
-  },
-});
-
-const { tabs_list, tab, panel } = tabs({});
-```
-
-</br>
-
-## Author
-
-- Matheus Figueiredo (@matheusscode)
-
-</br>
-
-## License
-
-This project is under the MIT License. You can [find the details here](LICENSE).
+This library is licensed under the MIT License.
