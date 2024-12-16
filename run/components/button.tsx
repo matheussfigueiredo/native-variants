@@ -1,4 +1,4 @@
-import { nv, type VariantProps } from "native-variants/dist/native-variants";
+import { nv, type VariantProps } from "native-variants";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
