@@ -7,7 +7,7 @@
     --background: 0, 0%, 7%;
     --list-item: 0, 0%, 45%;
     --title: 210, 22%, 96%;
-    --paragraphy: 210, 26%, 91%;
+    --paragraphy: 200, 26%, 91%;
     --background: 240 10% 3.9%;
     --radius: 0.3rem;
     --highlight: 218, 12%, 63%;
@@ -55,7 +55,7 @@ h3 {
 }
 
 h4 {
-  @apply text-xl;
+  @apply text-xl text-stronger font-semibold mt-6 mb-2.5 pb-2.5;
 }
 
 h1,
@@ -67,9 +67,12 @@ h6 {
   @apply text-title;
 }
 
+.highlight {
+  @apply bg-neutral-800 text-paragraphy font-mono px-1 rounded-md h-1;
+}
+
 h2,
-h3,
-h4 {
+h3 {
   @apply border-b border-border text-stronger font-semibold mt-8 mb-6 pb-2.5;
 }
 
@@ -78,7 +81,7 @@ strong {
 }
 
 p {
-  @apply text-paragraphy first:mt-6;
+  @apply text-paragraphy first:mt-6 mb-8;
 }
 
 li {

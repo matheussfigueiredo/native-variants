@@ -1,5 +1,6 @@
 "use server";
 
+import { Brand } from "@/components/brand";
 import { Code } from "@/components/code";
 import { promises as fs } from "fs";
 import { compileMDX } from "next-mdx-remote/rsc";
@@ -37,6 +38,7 @@ export const getMDX = async (slug: string) => {
     },
     components: {
       Code,
+      Brand
     },
   });
 
