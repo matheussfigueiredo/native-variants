@@ -1,10 +1,10 @@
 "use server";
 
 import { Breadcrumb } from "@/components/breadcrumb";
-import { DocNav } from "@/components/doc-nav";
-import { MobileNav } from "@/components/mobile-nav";
+import { DocNav } from "@/components/layout/doc-nav";
+import { MobileNav } from "@/components/layout/mobile-nav";
+import { SectionNav } from "@/components/layout/section-nav";
 import { Pagination } from "@/components/pagination";
-import { SectionNav } from "@/components/section-nav";
 import { getAllMDX } from "@/utils/mdx-handlers";
 
 export default async function DocLayout({

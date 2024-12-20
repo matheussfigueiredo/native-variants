@@ -1,7 +1,7 @@
 import { Github } from "@/components/icon/githhub";
 import Link from "next/link";
-import { Brand } from "./brand";
-import { QuickExplorer } from "./quick-explorer";
+import { Brand } from "../brand";
+import { QuickExplorer } from "../quick/quick-explorer";
 
 export function NavBar() {
   return (

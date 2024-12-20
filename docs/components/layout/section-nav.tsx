@@ -1,6 +1,6 @@
-import { SideNav } from "@/components/side-nav";
+import { SideNav } from "@/components/layout/side-nav";
 import { MDX } from "@/utils/mdx-handlers";
-import { ChasedList } from "./chased-list";
+import { ChasedList } from "../chased/chased-list";
 
 export function SectionNav({ content }: { content: MDX[] }) {
   return (

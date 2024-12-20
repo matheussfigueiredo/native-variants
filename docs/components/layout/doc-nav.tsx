@@ -1,5 +1,5 @@
+import { SideNav } from "@/components/layout/side-nav";
 import { NavLink } from "@/components/nav-link";
-import { SideNav } from "@/components/side-nav";
 import { MDX } from "@/utils/mdx-handlers";
 
 export function DocNav({ content }: { content: MDX[] }) {

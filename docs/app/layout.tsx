@@ -1,4 +1,4 @@
-import { NavBar } from "@/components/nav-bar";
+import { NavBar } from "@/components/layout/nav-bar";
 import { cn } from "@/lib/cn";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";

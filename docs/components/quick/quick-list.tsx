@@ -26,10 +26,10 @@ export function QuickList({
               )}
             >
               <span className="text-lg">{item.title}</span>
-              <p className="text-list-item">{item.slug}</p>
+              {!item.slug && <p className="text-list-item">{item.slug}</p>}
             </Link>
             {item.sections?.length > 0 && (
-              <div className="flex gap-1.5 py-2 h-full">
+              <div className="flex gap-1.5 py-0 h-full">
                 <div className="min-h-full min-w-[1px] ml-6 mr-2 bg-list-item" />
                 <ol className="flex flex-col h-full">
                   {item.sections?.map((section) =>

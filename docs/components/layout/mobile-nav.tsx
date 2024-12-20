@@ -1,5 +1,5 @@
 import { MDX } from "@/utils/mdx-handlers";
-import { NavLink } from "./nav-link";
+import { NavLink } from "../nav-link";
 
 export function MobileNav({ content }: { content: MDX[] }) {
   return (
