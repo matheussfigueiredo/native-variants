@@ -1,4 +1,5 @@
-import { nv, type VariantProps } from "native-variants";
+import { nv } from "@/native-variants/functions/nv";
+import { VariantProps } from "@/native-variants/types/nv-props";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
@@ -8,46 +9,44 @@ const buttonVariants = nv({
     root: {
       paddingHorizontal: 16,
       paddingVertical: 12,
+      width: "100%",
     },
     text: {
-      color: "white",
+      color: "#ffffff",
       textAlign: "center",
+      fontWeight: "600",
     },
   },
   variants: {
     variant: {
-      solid: {
+      destructive: {
         root: {
           backgroundColor: "#ff0006",
-        },
-        text: {
-          color: "white",
         },
       },
       ghost: {
         root: {
-          backgroundColor: "transparent",
+          backgroundColor: "#39bd79",
         },
-        text: {
-          color: "#ff0006",
+      },
+    },
+    isDisabled: {
+      true: {
+        root: {
+          opacity: 50,
+        },
+      },
+      false: {
+        root: {
+          opacity: 100,
         },
       },
     },
   },
   defaultVariants: {
-    variant: "solid",
+    variant: "destructive",
+    isDisabled: true,
   },
-  compoundVariants: [
-    {
-      variant: "ghost",
-      css: {
-        root: {
-          borderWidth: 1,
-          borderColor: "#fff006",
-        },
-      },
-    },
-  ],
 });
 
 export interface ButtonProps
@@ -57,11 +56,14 @@ export interface ButtonProps
 export const Button = React.forwardRef<
   React.ComponentRef<typeof TouchableOpacity>,
   ButtonProps
->(({ children, variant, ...props }, ref) => {
-  const { root, text } = buttonVariants({ variant });
+>(({ children, disabled, variant, ...props }, ref) => {
+  const { root, text } = buttonVariants({
+    variant,
+    isDisabled: disabled,
+  });
 
   return (
-    <TouchableOpacity {...props} ref={ref} style={root}>
+    <TouchableOpacity {...props} ref={ref} style={[root]}>
       <Text style={text}>{children}</Text>
     </TouchableOpacity>
   );

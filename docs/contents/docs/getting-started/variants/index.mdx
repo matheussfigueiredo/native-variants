@@ -1,0 +1,336 @@
+---
+title: Variants
+description: Variants allows you to create multiple versions of the same component.
+---
+
+## Adding variants
+
+You can add variants by using the `variants` key. There's no limit to how many variants you can add.
+
+```tsx
+import { nv } from "native-variants";
+
+const buttonVariants = nv({
+  slots: ["root", "text"],
+  base: {
+    root: { paddingHorizontal: 16, paddingVertical: 12 },
+    text: { color: "#ffffff", textAlign: "center" },
+  },
+  variants: {
+    variant: {
+      solid: {
+        root: { backgroundColor: "#ff0006" },
+        text: { color: "#ffffff" },
+      },
+      ghost: {
+        root: { backgroundColor: "transparent" },
+        text: { color: "#ff0006" },
+      },
+    },
+  },
+});
+
+const { root, text } = buttonVariants({ variant: "solid" });
+/**
+ * Result:
+ * root = backgroundColor: "#ff0006"
+ * text = color: "#ffffff"
+ */
+```
+
+## Multiple variants
+
+You can add multiple variants to a single component.
+
+```tsx
+import { nv } from 'native-variants'
+
+const buttonVariants = nv({
+    slots: ["root", "text"],
+    base: {
+      root: { paddingHorizontal: 16, paddingVertical: 12 },
+      text: { color: "#ffffff", textAlign: "center" },
+    },
+    variants: {
+      variant: {
+        solid: {
+          root: { backgroundColor: "#ff0006" },
+          text: { color: "#ffffff" },
+        },
+        ghost: {
+          root: { backgroundColor: "transparent" },
+          text: { color: "#ff0006" },
+        },
+      },
+      size: {
+        sm: {
+          root: {
+            paddingHorizontal: 8,
+            paddingVertical: 12
+          }
+          text: {
+            fontSize: 14
+          }
+        },
+        md: {
+          root: {
+            paddingHorizontal: 12,
+            paddingVertical: 16
+          },
+           text: {
+            fontSize: 16
+          }
+        },
+      }
+    },
+});
+
+
+const { root, text } = buttonVariants({ variant: 'solid', size: 'sm' })
+/**
+ * Result:
+ * root = {
+ *    paddingHorizontal: 8,
+ *    paddingVertical: 12
+ *    backgroundColor: "#ff0006"
+ * }
+ * text = {
+ *    color: "#ffffff",
+ *    fontSize: 14
+ * }
+ */
+
+const { root, text } = buttonVariants({ variant: 'ghost', size: 'md' })
+/**
+ * Result:
+ * root = {}
+ *    paddingHorizontal: 12,
+ *    paddingVertical: 16
+ *    backgroundColor: "transparent"
+ * }
+ * text = {
+ *    color: "#ff0006"
+ *    fontSize: 16
+ * }
+ */
+```
+
+## Boolean variants
+
+You can also add boolean variants to a component. This is useful when you want to add a state variant e.g. `disabled`.
+
+```jsx
+import { nv } from "native-variants";
+
+const button = nv({
+  slots: ["root", "text"],
+  base: {
+    root: {
+      borderRadius: 9999,
+      paddingVertical: 4,
+      paddingHorizontal: 16,
+    },
+    text: {
+      color: "#ffffff",
+      fontWeight: "600",
+      fontSize: 14,
+    },
+  },
+  variants: {
+    color: {
+      primary: {
+        root: {
+          backgroundColor: "#3b82f6",
+        },
+      },
+      secondary: {
+        root: {
+          backgroundColor: "#8b5cf6",
+        },
+      },
+      success: {
+        root: {
+          backgroundColor: "#22c55e",
+        },
+      },
+    },
+    disabled: {
+      true: {
+        root: {
+          opacity: 0.5,
+          backgroundColor: "#6b7280",
+          pointerEvents: "none",
+        },
+      },
+    },
+  },
+});
+
+const { root, text } = button({ color: "secondary", disabled: true });
+/**
+ * Result:
+ * root = {
+ *    paddingHorizontal: 16,
+ *    paddingVertical: 4,
+ *    borderRadius: 9999,
+ *    opacity: 0.5,
+ *    backgroundColor: "#6b7280",
+ *    pointerEvents: "none",
+ * }
+ * text = {
+ *    color: "white",
+ *    fontWeight: "600",
+ *    fontSize: 14,
+ * }
+ */
+```
+
+## Compound variants
+
+Sometimes you might want to add a variant that depends on another variant. For example, you might want to add a `color` variant that depends on the `disabled` variant. This is possible by using the compoundVariants key.
+
+```tsx
+import { nv } from "native-variants";
+
+const buttonVariants = nv({
+  slots: ["root", "text"],
+  base: {
+    root: {
+      fontWeight: "600",
+      paddingVertical: 4,
+      paddingHorizontal: 16,
+      borderRadius: 9999,
+    },
+    text: {
+      color: "#ffffff",
+      fontSize: 14,
+    },
+  },
+  variants: {
+    color: {
+      primary: {
+        root: {
+          backgroundColor: "#3b82f6",
+        },
+      },
+      secondary: {
+        root: {
+          backgroundColor: "#8b5cf6",
+        },
+      },
+      success: {
+        root: {
+          backgroundColor: "#22c55e",
+        },
+      },
+    },
+    disabled: {
+      true: {
+        root: {
+          opacity: 0.5,
+          backgroundColor: "#6b7280",
+          pointerEvents: "none",
+        },
+      },
+    },
+  },
+  compoundVariants: [
+    {
+      variant: "success",
+      disabled: true,
+      css: {
+        root: {
+          backgroundColor: "#d9f99d",
+        },
+        text: {
+          color: "#15803d",
+        },
+      },
+    },
+  ],
+});
+
+const { root, text } = buttonVariants({ color: "success", disabled: true });
+
+/**
+ * Result:
+ * root = {
+ *   paddingVertical: 4,
+ *   paddingHorizontal: 16,
+ *   borderRadius: 9999,
+ *   opacity: 0.5,
+ *   backgroundColor: "#d9f99d",
+ *   pointerEvents: "none"
+ * }
+ * text = {
+ *   fontWeight: "600",
+ *   fontSize: 14,
+ *   color: "#15803d",
+ * }
+ */
+```
+
+# Default variants
+
+You can also add a default variant to a component. This is useful when you want to add a predefined variants values to a component.
+
+```tsx
+import { nv } from "native-variants";
+
+const buttonVariants = nv({
+  slots: ["root", "text"],
+  base: {
+    root: {
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      width: "100%",
+    },
+    text: {
+      color: "#ffffff",
+      textAlign: "center",
+      fontWeight: "600",
+    },
+  },
+  variants: {
+    variant: {
+      destructive: {
+        root: {
+          backgroundColor: "#ff0006",
+        },
+      },
+      ghost: {
+        root: {
+          backgroundColor: "#39bd79",
+        },
+      },
+    },
+    isDisabled: {
+      true: {
+        root: {
+          opacity: 50,
+        },
+      },
+      false: {
+        root: {
+          opacity: 100,
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    variant: "destructive",
+    isDisabled: true,
+  },
+});
+
+const { root, text } = buttonVariants();
+/**
+ * Result:
+ * root = {
+ * backgroundColor: "#ff0006",
+ * }
+ * text = {
+ * color: "#ffffff"
+ * }
+ */
+```

@@ -1,0 +1,155 @@
+---
+title: Introduction
+description: Create a blog that you can use to share your career experiences and projects.
+---
+
+**Native Variants** is a first-class variants API library for StyleSheet.
+
+<Note title="Contribute">
+  Interested in helping me improve? Check out our [GitHub
+  repository](https://github.com/matheussatoshi/native-variants) to get started!
+  From feature suggestions to bug fixes, all contributions are welcome.
+</Note>
+
+### Variants
+
+Ever since [Stitches](https://stitches.dev/) introduced variants, we’ve become big fans of this approach. They’re a great way to create a consistent design system, so we created `Native Variants` to bring this functionality to mobile app development with `StyleSheet`.
+
+```tsx
+import { nv } from "native-variants";
+
+const buttonVariants = nv({
+  slots: ["root", "text"],
+  base: {
+    root: { paddingHorizontal: 16, paddingVertical: 12 },
+    text: { color: "#ffffff", textAlign: "center" },
+  },
+  variants: {
+    variant: {
+      solid: {
+        root: { backgroundColor: "#ff0006" },
+        text: { color: "#ffffff" },
+      },
+      ghost: {
+        root: { backgroundColor: "transparent" },
+        text: { color: "#ff0006" },
+      },
+    },
+  },
+  defaultVariants: {
+    variant: "solid",
+  },
+  compoundVariants: [
+    {
+      variant: "ghost",
+      css: {
+        root: { borderWidth: 1, borderColor: "#fff006" },
+      },
+    },
+  ],
+});
+
+return (
+  <TouchableOpacity style={root}>
+    <Text style={text}>{children}</Text>
+  </TouchableOpacity>
+);
+```
+
+[To learn more about variants, check the variants page.](/variants)
+
+### Split components into multiple slots
+
+You can style multiple components at once using the `slots` property.
+
+```tsx
+import { nv } from "native-variants";
+
+const cardVariants = nv({
+  slots: [
+    "root",
+    "avatar",
+    "wrapper",
+    "description",
+    "info_wrapper",
+    "name",
+    "role",
+  ],
+  base: {
+    root: {
+      flexDirection: "row",
+      backgroundColor: "#f1f5f9",
+      borderRadius: 16,
+      padding: 32,
+      paddingHorizontal: 0,
+    },
+    avatar: {
+      width: 96,
+      height: 96,
+      borderRadius: 48,
+      marginHorizontal: "auto",
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+    },
+    wrapper: {
+      flex: 1,
+      paddingTop: 24,
+      paddingHorizontal: 32,
+      textAlign: "center",
+    },
+    description: {
+      fontSize: 16,
+      fontWeight: "500",
+    },
+    info_wrapper: {
+      fontWeight: "500",
+    },
+    name: {
+      fontSize: 14,
+      color: "#0ea5e9",
+    },
+    role: {
+      fontSize: 14,
+      color: "#4b5563",
+    },
+  },
+});
+
+const { root, avatar, wrapper, description, info_wrapper, name, role } =
+  cardVariants();
+
+return (
+  <View style={root}>
+    <Image style={avatar} src={require("/intro-avatar.png")} />
+    <View style={wrapper}>
+      <Text style={description}>
+        “Tailwind variants allows you to reduce repeated code in your project
+        and make it more readable. They fixed the headache of building a design
+        system with TailwindCSS.”
+      </Text>
+      <View style={infoWrapper}>
+        <View style={name}>Zoey Lang</View>
+        <View style={role}>Full-stack developer, NextUI</View>
+      </View>
+    </View>
+  </View>
+);
+```
+
+### Automatic conflict resolution
+
+**Native Variants** implements native-merge under the hood, so it efficiently merges your styles so you don't have to worry about `StyleSheet` property conflicts.
+
+### Developer Experience
+
+**Native Variants** was built with the developer experience in mind and offers a great autocomplete experience thanks to its fully typed API. So when using TypeScript, <span className='highlight'>slots</span>, <span className='highlight'>`values`</span>, and <span className='highlight'>`breakpoints`</span> will be autocompleted for you.
+
+### Framework agnostic
+
+**Native Variants** is a utility library that only works with React Native.
+
+### Credits
+
+- Special thanks to [matheussatoshi](https://github.com/matheussatoshi) 💚

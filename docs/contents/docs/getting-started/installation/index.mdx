@@ -1,0 +1,102 @@
+---
+title: Installation
+description: Installation guide for our application.
+---
+
+## Getting started
+
+**Native Variants** combines the power of React Native's `StyleSheet` with a first-class variant API for dynamic styling.
+
+## Setup React Native
+
+**Native Variants** requires you to have a React Native project set up. If you haven't set up React Native yet, you can follow the official [React Native Getting Started guide](https://reactnative.dev/docs/getting-started).
+
+## Installation
+
+To use **Native Variants** in your React Native project, install it as a dependency:
+
+<Tabs defaultValue="npm" className="pt-5 pb-1">
+  <TabsList>
+    <TabsTrigger value="npm">npm</TabsTrigger>
+    <TabsTrigger value="yarn">yarn</TabsTrigger>
+    <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+  </TabsList>
+  <TabsContent value="npm">```bash npm i native-variants ```</TabsContent>
+  <TabsContent value="yarn">```bash yarn add native-variants ```</TabsContent>
+  <TabsContent value="pnpm">```bash pnpm i native-variants ```</TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import { nv, type VariantProps } from "native-variants";
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
+
+const buttonVariants = nv({
+  slots: ["root", "text"],
+  base: {
+    root: {
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+    },
+    text: {
+      color: "#ffffff",
+      textAlign: "center",
+    },
+  },
+  variants: {
+    variant: {
+      solid: {
+        root: {
+          backgroundColor: "#ff0006",
+        },
+        text: {
+          color: "#ffffff",
+        },
+      },
+      ghost: {
+        root: {
+          backgroundColor: "transparent",
+        },
+        text: {
+          color: "#ff0006",
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    variant: "solid",
+  },
+  compoundVariants: [
+    {
+      variant: "ghost",
+      css: {
+        root: {
+          borderWidth: 1,
+          borderColor: "#fff006",
+        },
+      },
+    },
+  ],
+});
+
+export interface ButtonProps
+  extends React.ComponentPropsWithoutRef<typeof TouchableOpacity>,
+    VariantProps<typeof buttonVariants> {}
+
+export const Button = React.forwardRef<
+  React.ComponentRef<typeof TouchableOpacity>,
+  ButtonProps
+>(({ children, variant, ...props }, ref) => {
+  const { root, text } = buttonVariants({ variant });
+
+  return (
+    <TouchableOpacity {...props} ref={ref} style={root}>
+      <Text style={text}>{children}</Text>
+    </TouchableOpacity>
+  );
+});
+
+Button.displayName = "Button";
+```
