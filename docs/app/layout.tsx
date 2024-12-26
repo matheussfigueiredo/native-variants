@@ -3,16 +3,18 @@ import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins, Ubuntu_Mono } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const openSans = Poppins({
+  variable: "--font-open-sans",
   subsets: ["latin"],
+  weight: "600",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const notoSansMono = Ubuntu_Mono({
+  variable: "--font-ubuntu-mono",
   subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-regular antialiased tracking-wide`}
+        className={`${openSans.variable} ${notoSansMono.variable} font-regular antialiased tracking-wide`}
         suppressHydrationWarning
       >
         <ThemeProvider
