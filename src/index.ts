@@ -1,3 +1,3 @@
-export * from "@/native-variants/functions/flatten";
-export * from "@/native-variants/functions/nv";
-export type { VariantProps } from "@/native-variants/types/nv-props";
+export * from "./flatten";
+export * from "./nv";
+export type { VariantProps } from "./nv-props";
