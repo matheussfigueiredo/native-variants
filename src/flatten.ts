@@ -1,6 +1,6 @@
 import { StyleProp } from "react-native";
-import { Flatten } from "../types/flatten-props";
-import { NativeCSSProperties } from "../types/nv-props";
+import { Flatten } from "./flatten-props";
+import { NativeCSSProperties } from "./nv-props";
 
 export function flatten(
   ...styles: StyleProp<Flatten>[]

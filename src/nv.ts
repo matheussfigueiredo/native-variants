@@ -1,4 +1,4 @@
-import { Component, NativeCSSProperties, Variants } from "../types/nv-props";
+import { Component, NativeCSSProperties, Variants } from "./nv-props";
 
 export const nv = <
   S extends string,
