@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import type {
   Component,
-  MappedVariants,
   NativeCSSProperties,
   Variants,
 } from "../types/nv-props";
@@ -9,7 +8,9 @@ import type {
 export const nv = <
   S extends string,
   V extends Variants<S> = {},
-  D extends MappedVariants<V> = MappedVariants<V>,
+  D extends Partial<{ [K in keyof V]: keyof V[K] | boolean }> = Partial<{
+    [K in keyof V]: keyof V[K] | boolean;
+  }>,
 >(
   config: Component<S, V>,
 ) => {
