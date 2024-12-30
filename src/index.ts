@@ -1,3 +1,4 @@
 export * from "./flatten";
+export * from "./flatten-props";
 export * from "./nv";
-export type { VariantProps } from "./nv-props";
+export * from "./nv-props";
