@@ -5,7 +5,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Button disabled>Example</Button>
-      <Button variant="ghost">Example</Button>
+      <Button>Example</Button>
     </View>
   );
 }
@@ -15,5 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
 });

@@ -30,6 +30,10 @@ export type Component<S extends string, V extends Variants<S>> = {
   compoundVariants?: CompoundVariant<S, V>[];
 };
 
+export type MappedVariants<V> = Partial<{
+  [K in keyof V]: keyof V[K] | boolean;
+}>;
+
 export type VariantProps<T extends (...args: any[]) => any> = T extends (
   props?: infer P,
 ) => any

@@ -25,13 +25,17 @@ export type Component<S extends string, V extends Variants<S>> = {
   base?: Partial<Record<S, NativeCSSProperties>>;
   variants?: V;
   defaultVariants?: {
-    [K in keyof V]?: keyof V[K];
+    [K in keyof V]?: keyof V[K] | boolean;
   };
   compoundVariants?: CompoundVariant<S, V>[];
 };
 
-export type VariantProps<T extends (...args: any) => any> = T extends (
-  props: infer P,
+export type MappedVariants<V> = Partial<{
+  [K in keyof V]: keyof V[K] | boolean;
+}>;
+
+export type VariantProps<T extends (...args: any[]) => any> = T extends (
+  props?: infer P,
 ) => any
   ? Partial<P>
   : never;

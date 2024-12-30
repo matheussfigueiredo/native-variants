@@ -10,6 +10,7 @@ const buttonVariants = nv({
       paddingHorizontal: 16,
       paddingVertical: 12,
       width: "100%",
+      backgroundColor: "red",
     },
     text: {
       color: "#ffffff",
@@ -18,34 +19,17 @@ const buttonVariants = nv({
     },
   },
   variants: {
-    variant: {
-      destructive: {
-        root: {
-          backgroundColor: "#ff0006",
-        },
-      },
-      ghost: {
-        root: {
-          backgroundColor: "#39bd79",
-        },
-      },
-    },
     isDisabled: {
       true: {
         root: {
-          opacity: 50,
+          opacity: 0.25,
+          backgroundColor: "#505050",
         },
-      },
-      false: {
-        root: {
-          opacity: 100,
+        text: {
+          color: "#000000",
         },
       },
     },
-  },
-  defaultVariants: {
-    variant: "destructive",
-    isDisabled: true,
   },
 });
 
@@ -56,14 +40,11 @@ export interface ButtonProps
 export const Button = React.forwardRef<
   React.ComponentRef<typeof TouchableOpacity>,
   ButtonProps
->(({ children, disabled, variant, ...props }, ref) => {
-  const { root, text } = buttonVariants({
-    variant,
-    isDisabled: disabled,
-  });
+>(({ children, disabled, ...props }, ref) => {
+  const { root, text } = buttonVariants({ isDisabled: disabled });
 
   return (
-    <TouchableOpacity {...props} ref={ref} style={[root]}>
+    <TouchableOpacity {...props} ref={ref} disabled={disabled} style={[root]}>
       <Text style={text}>{children}</Text>
     </TouchableOpacity>
   );
