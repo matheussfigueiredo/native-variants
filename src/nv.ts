@@ -8,7 +8,7 @@ import type {
 
 export const nv = <
   S extends string,
-  V extends Variants<S> = {},
+  V extends Variants<S>,
   D extends MappedVariants<V> = MappedVariants<V>,
 >(
   config: Component<S, V>,
