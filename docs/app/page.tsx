@@ -1,9 +1,9 @@
 import Copy from "@/components/markdown/copy";
+import { ProductTeams } from "@/components/product-teams";
 import { buttonVariants } from "@/components/ui/button";
 import { page_routes } from "@/lib/routes-config";
 import { registry_enterprises } from "@/registry/registry-enterprises";
 import { TerminalSquareIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -41,9 +41,7 @@ export default function Home() {
 
         <div className="flex gap-10 mt-6">
           {registry_enterprises.map((item) => (
-            <Link key={item.id} href={item.href} title={item.alt}>
-              <Image src={item.logo} alt={item.alt} width={40} height={40} />
-            </Link>
+            <ProductTeams key={item.id} {...item} />
           ))}
         </div>
       </div>
