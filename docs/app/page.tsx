@@ -1,8 +1,6 @@
 import Copy from "@/components/markdown/copy";
-import { ProductTeams } from "@/components/product-teams";
 import { buttonVariants } from "@/components/ui/button";
 import { page_routes } from "@/lib/routes-config";
-import { registry_enterprises } from "@/registry/registry-enterprises";
 import { TerminalSquareIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -32,19 +30,6 @@ export default function Home() {
           content="npm install native-variants"
         />
       </span>
-
-      <div className=" sm:mt-24 flex flex-col justify-center items-center">
-        <h1 className="font-medium mb-1.5">Built for modern product teams.</h1>
-        <span className="text-muted-foreground">
-          From next-gen startups to established enterprises.
-        </span>
-
-        <div className="flex gap-10 mt-6">
-          {registry_enterprises.map((item) => (
-            <ProductTeams key={item.id} {...item} />
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
