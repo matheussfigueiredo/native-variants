@@ -64,7 +64,7 @@ export function Logo() {
     <Link href="/" className="flex items-center gap-2.5">
       <h2 className="text-md font-bold font-sans">Native Variants</h2>
       <span className="bg-primary text-background px-2.5 py-0.5 rounded-md text-xs">
-        v0.1.18
+        v0.1.23
       </span>
     </Link>
   );
