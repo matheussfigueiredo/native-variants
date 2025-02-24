@@ -10,15 +10,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "packageManager": "pnpm@9.12.3",
   "scripts": {
     "build": "swc src -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
     "lint": "eslint src/**/*.ts",
     "prepare": "husky",
     "deploy": "npm version patch && npm publish --access public"
-  },
-  "engines": {
-    "node": "^20"
   },
   "keywords": [
     "slots",
