@@ -44,5 +44,6 @@
     "husky": "^9.1.7",
     "react": "^19.0.0",
     "react-native": "^0.76.5"
-  }
+  },
+  "packageManager": "pnpm@9.12.3"
 }
