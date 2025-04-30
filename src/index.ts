@@ -1,4 +1,3 @@
-export * from "./flatten";
-export * from "./flatten-props";
+export * from "./merge";
 export * from "./nv";
-export * from "./nv-props";
+export * from "./props";

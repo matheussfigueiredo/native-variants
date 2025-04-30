@@ -1,108 +1,147 @@
 import { useMemo } from "react";
 import type {
+  Base,
   Component,
+  CompoundVariant,
   MappedVariants,
-  NativeCSSProperties,
+  Styles,
   Variants,
-} from "./nv-props";
+} from "./props";
 
-export const nv = <
+function normalizeProps<D extends object>(defaults: D, props: Partial<D>): D {
+  const merged = { ...defaults };
+
+  Object.entries(props).forEach(([key, value]) => {
+    if (value !== undefined) {
+      // @ts-ignore
+      merged[key] = value;
+    }
+  });
+
+  Object.keys(merged).forEach((key) => {
+    const value = merged[key as keyof D];
+    if (typeof value === "boolean") {
+      // @ts-ignore
+      merged[key] = value ? "true" : "false";
+    }
+  });
+
+  return merged;
+}
+
+function initializeBaseStyles<S extends string>(
+  slots: S[],
+  base?: Base<S>,
+): [Partial<Record<S, Styles>>, Set<string>] {
+  const styles: Partial<Record<S, Styles>> = {};
+  const usedSlots: Set<string> = new Set();
+
+  slots.forEach((slot) => {
+    styles[slot] = { ...(base?.[slot] || {}) };
+    usedSlots.add(slot);
+  });
+
+  return [styles, usedSlots];
+}
+
+function applyVariants<S extends string, V extends Variants<S>>(
+  variants: V,
+  props: Partial<MappedVariants<V>>,
+  styles: Partial<Record<S, Styles>>,
+  usedSlots: Set<string>,
+) {
+  Object.keys(variants).forEach((variantKey) => {
+    const selectedValue = props[variantKey as keyof MappedVariants<V>];
+    const variant = variants[variantKey as keyof V];
+
+    //@ts-ignore
+    if (selectedValue && variant?.[selectedValue]) {
+      //@ts-ignore
+      const variantStyles = variant[selectedValue];
+
+      for (const slot in variantStyles) {
+        styles[slot as S] = {
+          ...styles[slot as S],
+          ...variantStyles[slot as S],
+        };
+        usedSlots.add(slot);
+      }
+    }
+  });
+}
+
+function applyCompoundVariants<
   S extends string,
   V extends Variants<S>,
   D extends MappedVariants<V> = MappedVariants<V>,
 >(
-  config: Component<S, V>,
-) => {
+  compoundVariants?: CompoundVariant<S, V>[],
+  props: Partial<D> = {},
+  styles: Partial<Record<S, Styles>> = {},
+  usedSlots?: Set<string>,
+) {
+  compoundVariants?.forEach((compoundVariant) => {
+    const matches = Object.entries(compoundVariant).every(
+      ([key, value]) => key === "css" || props[key as keyof D] === value,
+    );
+
+    if (matches && compoundVariant.cs) {
+      for (const slot in compoundVariant.css) {
+        styles[slot as S] = {
+          ...styles[slot as S],
+          ...compoundVariant.css[slot as S],
+        };
+        usedSlots?.add(slot);
+      }
+    }
+  });
+}
+
+function logUnusedSlots<S extends string>(slots: S[], usedSlots: Set<string>) {
+  const unused = slots.filter((slot) => !usedSlots.has(slot));
+  if (unused.length > 0) {
+    console.log("Estilos não utilizados:", unused);
+  }
+}
+
+function nv<
+  S extends string,
+  V extends Variants<S>,
+  D extends MappedVariants<V> = MappedVariants<V>,
+>(config: Component<S, V>) {
+  const { slots, variants, base, compoundVariants, defaultVariants } = config;
   const componentFunction = (props: Partial<D> = {}) => {
-    const {
-      base,
-      variants = {},
-      defaultVariants,
-      compoundVariants = [],
-      slots,
-    } = config;
-
     const computeStyles = () => {
-      const mergedProps = { ...defaultVariants, ...props };
+      const mergedProps = normalizeProps(defaultVariants || {}, props);
+      const [styles, usedSlots] = initializeBaseStyles(slots, base);
 
-      Object.keys(mergedProps).forEach((key) => {
-        const propValue = mergedProps[key];
-        if (typeof propValue === "boolean") {
-          //@ts-ignore
-          mergedProps[key] = propValue ? "true" : "false";
-        }
-      });
-
-      if (!mergedProps.variant && defaultVariants?.variant) {
-        //@ts-ignore
-        mergedProps.variant = defaultVariants?.variant;
+      if (variants) {
+        applyVariants(variants, mergedProps, styles, usedSlots);
       }
 
-      const styles: Partial<Record<S, NativeCSSProperties>> = {};
+      applyCompoundVariants(
+        compoundVariants || [],
+        mergedProps,
+        styles,
+        usedSlots,
+      );
 
-      const usedStyles: Set<string> = new Set();
+      logUnusedSlots(slots, usedSlots);
 
-      slots.forEach((slot) => {
-        styles[slot] = { ...(base![slot] || {}) };
-        usedStyles.add(slot);
-      });
-
-      Object.keys(variants).forEach((variantKey) => {
-        const key = variantKey as keyof V;
-        const selectedVariant = mergedProps[key];
-
-        //@ts-ignore
-        if (selectedVariant && variants[key]) {
-          //@ts-ignore
-          const variantStyles = variants[key]?.[selectedVariant];
-          if (variantStyles) {
-            for (const slot in variantStyles) {
-              styles[slot as S] = {
-                ...styles[slot as S],
-                ...variantStyles[slot as S],
-              };
-              usedStyles.add(slot as string);
-            }
-          }
-        }
-      });
-
-      compoundVariants.forEach((compoundVariant) => {
-        const matches = Object.entries(compoundVariant).every(
-          ([key, value]) => {
-            if (key === "css") return true;
-            return mergedProps[key as keyof D] === value;
-          },
-        );
-
-        if (matches && compoundVariant.css) {
-          for (const slot in compoundVariant.css) {
-            styles[slot as S] = {
-              ...styles[slot as S],
-              ...compoundVariant.css[slot as S],
-            };
-            usedStyles.add(slot as string);
-          }
-        }
-      });
-
-      const unusedSlots = slots.filter((slot) => !usedStyles.has(slot));
-      if (unusedSlots.length > 0) {
-        console.log("Estilos não utilizados:", unusedSlots);
-      }
-
-      return styles as Record<S, NativeCSSProperties>;
+      return styles as Record<S, Styles>;
     };
 
     return useMemo(computeStyles, [JSON.stringify(props)]);
   };
 
   componentFunction.variants = Object.fromEntries(
-    Object.entries(config.variants || {}).map(([key, value]) => [
+    Object.entries(variants || {}).map(([key, value]) => [
       key,
       Object.keys(value!),
     ]),
   ) as Record<keyof V, string[]>;
 
   return componentFunction;
-};
+}
+
+export { nv };
