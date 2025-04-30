@@ -1,20 +1,18 @@
 import { merge } from "@/utils/merge";
 import { nv } from "@/utils/nv";
 import { VariantProps } from "@/utils/props";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, View } from "react-native";
 
-const buttonVariants = nv({
+const badgeVariants = nv({
   slots: ["root", "text"],
   base: {
     root: {
       display: "flex",
-      flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      borderRadius: 6,
+      borderRadius: 16,
     },
     text: {
-      fontSize: 16,
       fontWeight: "500",
     },
   },
@@ -28,14 +26,6 @@ const buttonVariants = nv({
           color: "#dedede",
         },
       },
-      blank: {
-        root: {
-          backgroundColor: "#dedede",
-        },
-        text: {
-          color: "#040404",
-        },
-      },
       outline: {
         root: {
           borderWidth: 1,
@@ -46,34 +36,34 @@ const buttonVariants = nv({
           color: "#dedede",
         },
       },
-      link: {
+      blank: {
         root: {
-          backgroundColor: "transparent",
-          borderBottomColor: "#dedede",
-          borderBottomWidth: 0.4,
+          backgroundColor: "#dedede",
         },
         text: {
-          color: "#dedede",
+          color: "#040404",
         },
       },
     },
     size: {
       default: {
         root: {
-          height: 40,
-          paddingHorizontal: 14,
+          height: 24,
+          paddingHorizontal: 8,
         },
         text: {
-          fontSize: 16,
+          fontSize: 12,
+          fontWeight: "600",
         },
       },
       sm: {
         root: {
-          height: 30,
-          paddingHorizontal: 12,
+          height: 36,
+          paddingHorizontal: 8,
         },
         text: {
-          fontSize: 14,
+          fontSize: 10,
+          fontWeight: "400",
         },
       },
     },
@@ -84,24 +74,24 @@ const buttonVariants = nv({
   },
 });
 
-function Button({
-  style,
+function Badge({
   size,
+  style,
   variant,
   asChild = false,
   children,
   ...props
-}: React.ComponentProps<typeof TouchableOpacity> &
-  VariantProps<typeof buttonVariants> & {
+}: React.ComponentProps<typeof View> &
+  VariantProps<typeof badgeVariants> & {
     asChild?: boolean;
   }) {
-  const { root, text } = buttonVariants({ size, variant });
+  const { root, text } = badgeVariants({ variant, size });
 
   return (
-    <TouchableOpacity style={merge(root, style)} {...props}>
+    <View style={merge(root, style)} {...props}>
       {asChild ? children : <Text style={text}>{children}</Text>}
-    </TouchableOpacity>
+    </View>
   );
 }
 
-export { Button, buttonVariants };
+export { Badge, badgeVariants };
