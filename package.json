@@ -13,7 +13,6 @@
   "scripts": {
     "build": "swc src -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
     "lint": "eslint src/**/*.ts",
-    "prepare": "husky",
     "deploy": "npm version patch && npm publish --access public"
   },
   "keywords": [
@@ -40,12 +39,11 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.0"
   },
-  "peerDependencies": {
-    "husky": "^9.1.7"
-  },
   "packageManager": "yarn@1.22.22",
   "dependencies": {
-    "react-native": "0.79.3",
+    "react-native": "0.79.3"
+  },
+  "peerDependencies": {
     "react": "^19.1.0"
   }
 }
