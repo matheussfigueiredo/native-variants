@@ -44,7 +44,16 @@ type VariantProps<T extends (...args: any[]) => any> = T extends (
   ? Partial<P>
   : never;
 
+type BaseStyle = ViewStyle &
+  TextStyle &
+  ImageStyle &
+  FlexStyle &
+  TransformsStyle;
+
+type AnyStyle = Partial<BaseStyle>;
+
 export {
+  AnyStyle,
   Base,
   Component,
   CompoundVariant,

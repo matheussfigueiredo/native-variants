@@ -1,13 +1,9 @@
-import { Styles } from "./props";
+import { AnyStyle } from "./props";
 
-export function cn(...styles: Styles[]): Styles {
+export function cn<T extends AnyStyle>(
+  ...styles: (T | null | false | undefined)[]
+): T {
   return styles
-    .filter((style): style is Styles => Boolean(style))
-    .reduce<Styles>(
-      (merged, style) => ({
-        ...merged,
-        ...style,
-      }),
-      {},
-    );
+    .filter((s): s is T => Boolean(s))
+    .reduce<T>((acc, style) => ({ ...acc, ...style }), {} as T);
 }
