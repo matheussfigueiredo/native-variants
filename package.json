@@ -1,6 +1,6 @@
 {
   "name": "native-variants",
-  "version": "0.1.28",
+  "version": "0.1.27",
   "description": "A library for handling variants in React Native components with theme support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,11 +39,11 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.0"
   },
-  "packageManager": "yarn@1.22.22",
   "dependencies": {
     "react-native": "0.79.3"
   },
   "peerDependencies": {
-    "react": "^19.1.0"
-  }
+    "react": "^19.0.0"
+  },
+  "packageManager": "yarn@1.22.22"
 }
