@@ -1,7 +1,9 @@
 import { StyleProp } from "react-native";
 import { Styles } from "./props";
 
-export function cn(...styles: StyleProp<any>[]): Styles {
+export function merge(
+  ...styles: StyleProp<Styles | null | undefined | false>[]
+): Styles {
   return styles
     .filter((style): style is Styles => Boolean(style))
     .reduce<Styles>(
