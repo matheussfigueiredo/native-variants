@@ -1,7 +1,6 @@
-import { StyleProp } from "react-native";
 import { Styles } from "./props";
 
-export function cn(...styles: StyleProp<Partial<Styles>>[]): Styles {
+export function cn(...styles: Styles[]): Styles {
   return styles
     .filter((style): style is Styles => Boolean(style))
     .reduce<Styles>(
