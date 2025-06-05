@@ -16,7 +16,7 @@ type CnStyleProp = Partial<
   | StyleProp<TransformsStyle>
 >;
 
-export function cn(...styles: CnStyleProp[]): Styles {
+export function cn(...styles: CnStyleProp[]): CnStyleProp {
   return styles
     .filter((style): style is Styles => Boolean(style))
     .reduce<Styles>(
