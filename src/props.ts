@@ -6,7 +6,7 @@ import type {
   ViewStyle,
 } from "react-native";
 
-export type Styles = Partial<
+type Styles = Partial<
   ViewStyle & TextStyle & ImageStyle & FlexStyle & TransformsStyle
 >;
 
