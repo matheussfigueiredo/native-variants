@@ -16,7 +16,9 @@ export const createVariantsProvider = <T,>() => {
     variants: T;
     children: React.ReactNode;
   }) => {
-    return <Context.Provider value={{ variants }}>{children}</Context.Provider>;
+    const value = React.useMemo(() => ({ variants }), [variants]);
+
+    return <Context.Provider value={value}>{children}</Context.Provider>;
   };
 
   const useVariants = () => {
