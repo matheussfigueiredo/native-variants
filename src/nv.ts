@@ -97,12 +97,7 @@ function applyCompoundVariants<
   });
 }
 
-function logUnusedSlots<S extends string>(slots: S[], usedSlots: Set<string>) {
-  const unused = slots.filter((slot) => !usedSlots.has(slot));
-  if (unused.length > 0) {
-    console.log("Estilos não utilizados:", unused);
-  }
-}
+
 
 function nv<
   S extends string,
@@ -126,7 +121,6 @@ function nv<
         usedSlots,
       );
 
-      logUnusedSlots(slots, usedSlots);
 
       return styles as Record<S, Styles>;
     };
@@ -145,3 +139,4 @@ function nv<
 }
 
 export { nv };
+
