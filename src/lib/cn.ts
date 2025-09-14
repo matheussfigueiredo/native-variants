@@ -1,4 +1,4 @@
-import { StyleProp } from "react-native";
+import type { StyleProp } from "react-native";
 
 function flattenStyle<T>(style: StyleProp<T>): T[] {
   if (!style) return [];
