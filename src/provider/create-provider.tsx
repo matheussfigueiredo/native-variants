@@ -1,4 +1,4 @@
-import { createContext, type PropsWithChildren, useContext, useMemo } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 
 type GenericContext<T> = {
   props: T;
@@ -10,7 +10,7 @@ export const createCTX = <T,>() => {
   const CTXProvider = ({
     children,
     props,
-  }: PropsWithChildren & {
+  }: React.PropsWithChildren & {
     props: T;
   }) => {
     const value = useMemo(() => ({ props }), [props]);
