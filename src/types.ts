@@ -30,7 +30,7 @@ export type MappedVariants<V> = Partial<{
   [K in keyof V]: keyof V[K];
 }>;
 
-export type DefineConfig = <S extends string, V extends Variants<S>>(
+export type DefineConfig = <const S extends string, V extends Variants<S>>(
   config: Config<S, V>,
 ) => Config<S, V>;
 

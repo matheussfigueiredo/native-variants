@@ -20,7 +20,7 @@ function cache<T extends (...args: any[]) => any>(fn: T): T {
   }) as T;
 }
 
-function variant<S extends string, V extends Variants<S>>(
+function variant<const S extends string, V extends Variants<S>>(
   slot: S,
   variants: V,
   props: DefaultVariants<S, V>,
@@ -41,7 +41,7 @@ function variant<S extends string, V extends Variants<S>>(
   return style;
 }
 
-function compound<S extends string, V extends Variants<S>>(
+function compound<const S extends string, V extends Variants<S>>(
   slot: S,
   compoundVariants: CompoundVariant<S, V>[],
   props: DefaultVariants<S, V>,
@@ -60,7 +60,7 @@ function compound<S extends string, V extends Variants<S>>(
   return style;
 }
 
-function set<S extends string, V extends Variants<S>>(
+function set<const S extends string, V extends Variants<S>>(
   slot: S,
   base: Base<S>,
   variants: V,
@@ -74,7 +74,7 @@ function set<S extends string, V extends Variants<S>>(
   };
 }
 
-export function styled<S extends string, V extends Variants<S>>(
+export function styled<const S extends string, V extends Variants<S>>(
   config: Config<S, V>,
 ) {
   const {
@@ -121,11 +121,11 @@ export function createNVA<Tokens extends Theme>({
     config: Config<S, V>,
   ): (props?: DefaultVariants<S, V>) => Base<S>;
 
-  function styled<S extends string, V extends Variants<S>>(
+  function styled<const S extends string, V extends Variants<S>>(
     configFactory: (defineConfig: DefineConfig, theme: Tokens) => Config<S, V>,
   ): (props?: DefaultVariants<S, V>) => Base<S>;
 
-  function styled<S extends string, V extends Variants<S>>(
+  function styled<const S extends string, V extends Variants<S>>(
     configOrFactory:
       | Config<S, V>
       | ((defineConfig: DefineConfig, theme: Tokens) => Config<S, V>),
