@@ -1,121 +1,98 @@
-import { Badge } from "@/components/badge";
-import { Button } from "@/components/button";
-import { List, ListItem } from "@/components/list";
-import { Typography } from "@/components/typography";
-import { merge } from "@/utils/merge";
-import { nv } from "@/utils/nv";
-import React from "react";
-import { Linking, View } from "react-native";
+import { Image } from 'expo-image';
+import { Platform, StyleSheet } from 'react-native';
+
+import { HelloWave } from '@/components/hello-wave';
+import ParallaxScrollView from '@/components/parallax-scroll-view';
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
-  const styles = screenRecipe();
-
-  const handleTakeToDocumentation = () => {
-    Linking.openURL(
-      "https://native-variants.vercel.app/docs/getting-started/introduction",
-    );
-  };
-
   return (
-    <View style={styles.root}>
-      <View style={styles.content}>
-        <Badge variant="blank">v0.1.24</Badge>
-        <Typography as="headline">Native Variants</Typography>
-        <Typography as="small">
-          Simplifying and Streamlining Style Variations with StyleSheet in React
-          Native.
-        </Typography>
-        <List style={styles.list}>
-          <ListItem>
-            <Typography style={merge(styles.opaque_text, styles.list_text)}>
-              Multi-Slot Styling: Define styles for multiple slots (e.g., root,
-              text).
-            </Typography>
-          </ListItem>
-          <ListItem>
-            <Typography style={merge(styles.opaque_text, styles.list_text)}>
-              Variant Management: Easily handle variations like solid or ghost.
-            </Typography>
-          </ListItem>
-          <ListItem>
-            <Typography style={merge(styles.opaque_text, styles.list_text)}>
-              Default Variants: Define fallback styles for missing
-              configurations.
-            </Typography>
-          </ListItem>
-          <ListItem>
-            <Typography style={merge(styles.opaque_text, styles.list_text)}>
-              Compound Variants: Apply conditional styles based on combined
-              properties.
-            </Typography>
-          </ListItem>
-        </List>
+    <ParallaxScrollView
+      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerImage={
+        <Image
+          source={require('@/assets/images/partial-react-logo.png')}
+          style={styles.reactLogo}
+        />
+      }>
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">Welcome!</ThemedText>
+        <HelloWave />
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+        <ThemedText>
+          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
+          Press{' '}
+          <ThemedText type="defaultSemiBold">
+            {Platform.select({
+              ios: 'cmd + d',
+              android: 'cmd + m',
+              web: 'F12',
+            })}
+          </ThemedText>{' '}
+          to open developer tools.
+        </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <Link href="/modal">
+          <Link.Trigger>
+            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+          </Link.Trigger>
+          <Link.Preview />
+          <Link.Menu>
+            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
+            <Link.MenuAction
+              title="Share"
+              icon="square.and.arrow.up"
+              onPress={() => alert('Share pressed')}
+            />
+            <Link.Menu title="More" icon="ellipsis">
+              <Link.MenuAction
+                title="Delete"
+                icon="trash"
+                destructive
+                onPress={() => alert('Delete pressed')}
+              />
+            </Link.Menu>
+          </Link.Menu>
+        </Link>
 
-        <Button
-          style={styles.action}
-          size="sm"
-          variant="link"
-          onPress={handleTakeToDocumentation}
-        >
-          Docs
-        </Button>
-      </View>
-
-      <Typography as="small" style={styles.copyright}>
-        Created by{" "}
-        <Typography style={merge(styles.opaque_text, styles.copyright)}>
-          matheussatoshi
-        </Typography>{" "}
-        💚
-      </Typography>
-    </View>
+        <ThemedText>
+          {`Tap the Explore tab to learn more about what's included in this starter app.`}
+        </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
+        <ThemedText>
+          {`When you're ready, run `}
+          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
+          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
+          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
+          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+        </ThemedText>
+      </ThemedView>
+    </ParallaxScrollView>
   );
 }
 
-const screenRecipe = nv({
-  slots: [
-    "root",
-    "list",
-    "list_text",
-    "action",
-    "content",
-    "copyright",
-    "opaque_text",
-  ],
-  base: {
-    root: {
-      flex: 1,
-      paddingHorizontal: 12,
-      paddingVertical: 24,
-      backgroundColor: "#111111",
-    },
-    action: {
-      alignSelf: "center",
-      marginTop: 14,
-    },
-    content: {
-      display: "flex",
-      flex: 1,
-      gap: 4,
-      justifyContent: "center",
-      flexDirection: "column",
-      alignItems: "flex-start",
-    },
-    list: {
-      paddingLeft: 10,
-      paddingRight: 26,
-      marginTop: 14,
-    },
-    list_text: {
-      fontSize: 14,
-    },
-    opaque_text: {
-      color: "#909090",
-    },
-    copyright: {
-      textAlign: "center",
-      width: "100%",
-      fontSize: 12,
-    },
+const styles = StyleSheet.create({
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
+  },
+  reactLogo: {
+    height: 178,
+    width: 290,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
   },
 });
